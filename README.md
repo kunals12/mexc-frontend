@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# ReactJS Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple ReactJS project with components for managing account information, open orders, and an order book. The project allows users to place orders with various options.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+Certainly! Here is a basic README.md file for your ReactJS project based on the documentation provided:
 
-### `npm start`
+markdown
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# ReactJS Project
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This is a simple ReactJS project with components for managing account information, open orders, and an order book. The project allows users to place orders with various options.
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+├── node_modules
+├── public
+│   ├── index.html
+│   ├── manifest.json
+│   └── robots.txt
+├── src
+│   ├── components
+│   │   ├── AccountInfo
+│   │   │   ├── AccountInfo.css
+│   │   │   ├── AccountInfo.js
+│   │   ├── OpenOrders
+│   │   │   ├── OpenOrders.css
+│   │   │   ├── OpenOrders.js
+│   │   ├── OrderBook
+│   │   │   ├── OrderBook.css
+│   │   │   ├── OrderBook.js
+│   │   ├── PlaceOrder
+│   │   │   ├── PlaceOrder.css
+│   │   │   ├── PlaceOrder.js
+|   |   ├── fetch.js
+│   ├── App.css
+│   ├── App.js
+│   ├── index.css
+│   ├── index.js
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── README.md
+```
 
-### `npm run build`
+## Component Descriptions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **AccountInfo:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   - Displays account information such as account type and balances.
+   - Fetches data using the `getAccountInfo` API endpoint.
+   - Styles are defined in `AccountInfo.css`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **OpenOrders:**
 
-### `npm run eject`
+   - Shows a list of open orders.
+   - Fetches data using the `getCurrentOpenOrder` API endpoint.
+   - Styles are defined in `OpenOrders.css`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **OrderBook:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - Displays the order book with live orders using socket.io.
+   - Fetches data using the `getDepth` API endpoint.
+   - Styles are defined in `OrderBook.css`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **PlaceOrderButton:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   - Allows users to place orders with options like selecting a coin, order type, price, and quantity.
+   - Fetches data using the `testOrder` API endpoint.
+   - Styles are defined in `PlaceOrderButton.css`.
 
-## Learn More
+5. **fetch.js:**
+   - Contains utility functions for making API requests using Axios.
+   - Includes functions like `getAccountInfo`, `getDepth`, `getCurrentOpenOrder`, `getCurrentAveragePrice`, and `testOrder`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Data Flow
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **App.js:**
 
-### Code Splitting
+   - The main component that serves as a container for other components.
+   - Manages the `selectedCoin` state and passes it down to `PlaceOrderButton` and `OrderBook` components.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **PlaceOrderButton.js:**
 
-### Analyzing the Bundle Size
+   - Allows users to place orders with options.
+   - Receives the `selectedCoin` and `onCoinSelect` prop from `App.js`.
+   - Fetches account data and allows users to place orders.
+   - Notifies the parent component (`App.js`) of the selected coin using the `onCoinSelect` prop.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. **OrderBook.js:**
+   - Displays live orders in the order book.
+   - Receives the `selectedCoin` prop from `App.js`.
+   - Fetches account data and order book data for the selected coin.
 
-### Making a Progressive Web App
+## Running the Project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Ensure you have Node.js installed.
 
-### Advanced Configuration
+2. Install project dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+   ```bash
+   npm install
+   ```
 
-### Deployment
+3. Start the development server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   ```bash
+   npm start dev
+   ```
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. Open your browser and navigate to http://localhost:3000 to view the application.

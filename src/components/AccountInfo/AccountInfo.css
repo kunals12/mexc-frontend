@@ -1,0 +1,26 @@
+/* AccountInfo.css */
+
+.component.account-info {
+    background-color: #68dd99;
+    color: #000000;
+}
+
+.component.account-info h2 {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 8px;
+}
+
+.component.account-info p,
+.component.account-info h3 {
+    margin-top: 16px;
+}
+
+.component.account-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.component.account-info li {
+    margin-bottom: 8px;
+}

@@ -1,0 +1,25 @@
+/* OrderBook.css */
+
+.component.order-book {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.component.order-book h2 {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 8px;
+}
+
+.component.order-book h3 {
+    margin-top: 16px;
+}
+
+.component.order-book ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.component.order-book li {
+    margin-bottom: 8px;
+}

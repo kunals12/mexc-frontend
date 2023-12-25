@@ -1,0 +1,21 @@
+/* OpenOrders.css */
+
+.component.open-orders {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+.component.open-orders h2 {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 8px;
+}
+
+.component.open-orders ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.component.open-orders li {
+    margin-bottom: 8px;
+}

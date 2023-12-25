@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import AccountInfo from "./components/AccountInfo/AccountInfo";
+import OpenOrders from "./components/OpenOrders/OpenOrders";
+import OrderBook from "./components/OrderBook/OrderBook";
+import PlaceOrderButton from "./components/PlaceOrder/PlaceOrder";
 
 function App() {
+  const [selectedCoin, setSelectedCoin] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <AccountInfo />
+      <hr />
+      <PlaceOrderButton
+        selectedCoin={selectedCoin}
+        onCoinSelect={(coin) => setSelectedCoin(coin)}
+      />
+      <hr />
+      {selectedCoin ? <OrderBook selectedCoin={selectedCoin} /> : <></>}
+      <hr />
+      {selectedCoin ? <OpenOrders selectedCoin={selectedCoin} /> : <></>}
     </div>
   );
 }
