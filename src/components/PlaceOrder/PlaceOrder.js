@@ -1,7 +1,7 @@
 // PlaceOrderButton.js
 
 import React, { useEffect, useState } from "react";
-import { getCurrentAveragePrice, getExchangeInfo, testOrder } from "../fetch";
+import { getCurrentAveragePrice, getExchangeInfo, createOrder } from "../fetch";
 import "./PlaceOrder.css";
 
 const PlaceOrderButton = ({ onCoinSelect }) => {
@@ -10,6 +10,7 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
   const [selectedCoin, setSelectedCoin] = useState("");
   const [price, setPrice] = useState(avgPrice);
   const [quantity, setQuantity] = useState();
+  const [quoteOrderQty, setQuoteOrderQty] = useState();
   const [coinList, setCoinList] = useState([]);
   const [orderType, setOrderType] = useState([
     "LIMIT",
@@ -44,7 +45,7 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
       if (coinList.length === 0) {
         try {
           const res = await getExchangeInfo();
-          console.log(res.symbols);
+          // console.log(res.symbols);
           setCoinList(res.symbols);
           // console.log("coins", coinList);
         } catch (error) {
@@ -61,13 +62,14 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
 
     try {
       // console.log(selectedCoin, side, price, quantity, selectedOrderTypes);
-      const orderData = await testOrder(
+      const orderData = await createOrder(
         selectedCoin,
         side,
         price,
         quantity,
+        quoteOrderQty,
         selectedOrderTypes
-      ); // Assuming `testOrder` takes price and quantity
+      ); // Assuming `createOrder` takes price and quantity
       setOrderResult(orderData);
     } catch (error) {
       console.error("Error placing order:", error);
@@ -79,7 +81,19 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
     const amount = event.target.value;
     // console.log(amount);
     setPrice(Number(amount));
-    const equivalentAmount = amount / avgPrice;
+    const equivalentAmount = quoteOrderQty / amount;
+    console.log(equivalentAmount);
+
+    setQuantity(equivalentAmount);
+  };
+
+  const handleUSDTChange = (event) => {
+    const amount = event.target.value;
+    // console.log(amount);
+    setQuoteOrderQty(Number(amount));
+    console.log(quoteOrderQty, price);
+    const equivalentAmount =
+      selectedOrderTypes === orderType[1] ? amount / avgPrice : amount / price;
     console.log(equivalentAmount);
 
     setQuantity(equivalentAmount);
@@ -87,6 +101,7 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
 
   const handleQuantityChange = (event) => {
     const amount = event.target.value;
+    console.log("quantity", amount);
     setQuantity(amount);
   };
 
@@ -124,6 +139,8 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
             value={selectedOrderTypes}
             onChange={(e) => {
               setSelectedOrderTypes(e.target.value);
+              setQuoteOrderQty(0);
+              setQuantity(0);
             }}
             required
           >
@@ -137,12 +154,33 @@ const PlaceOrderButton = ({ onCoinSelect }) => {
           </select>
         </label>
         <label>
-          Price:
+          Price:{" "}
+          {selectedOrderTypes === orderType[1] ? (
+            <input
+              type="number"
+              value={avgPrice}
+              readOnly
+              placeholder={avgPrice}
+              // onChange={handlePriceChange}
+              required
+            />
+          ) : (
+            <input
+              type="number"
+              value={price}
+              placeholder={avgPrice}
+              onChange={handlePriceChange}
+              required
+            />
+          )}
+        </label>
+        <label>
+          USDT:
           <input
             type="number"
-            value={price}
-            placeholder={avgPrice}
-            onChange={handlePriceChange}
+            value={quoteOrderQty}
+            // placeholder={quoteOrderQty}
+            onChange={handleUSDTChange}
             required
           />
         </label>

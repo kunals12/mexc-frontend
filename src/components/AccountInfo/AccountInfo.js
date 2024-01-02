@@ -8,22 +8,29 @@ const AccountInfo = () => {
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
-      if (accountType == null) {
-        try {
-          const response = await getAccountInfo();
-          console.log(response);
-          setAccountType(response.accountType);
-          // console.log(response.balances[0].free);
-          setBalances(response.balances);
-          // console.log(balances);
-        } catch (error) {
-          console.error("Error fetching account info:", error);
-        }
+      try {
+        const response = await getAccountInfo();
+        console.log(response);
+        setAccountType(response.accountType);
+        setBalances(response.balances);
+      } catch (error) {
+        console.error("Error fetching account info:", error);
       }
     };
 
+    // Fetch account info immediately when the component mounts
     fetchAccountInfo();
-  }, [accountType, balances]);
+
+    // Set up an interval to fetch account info every 10 seconds (adjust as needed)
+    const intervalId = setInterval(() => {
+      fetchAccountInfo();
+    }, 5000); // 5 seconds
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
   return (
     <div className="component account-info">

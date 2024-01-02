@@ -9,25 +9,49 @@ const OrderBook = ({ selectedCoin }) => {
   const [price, setPrice] = useState([]);
   const [quantity, setQuantity] = useState([]);
 
-  useEffect(() => {
-    const socket = socketIOClient("http://localhost:3001", {
-      query: {
-        data: getOrderBook(selectedCoin), // Pass your data as a query parameter
-      },
-    });
+  // useEffect(() => {
+  //   const socket = socketIOClient("ws://localhost:3001", {
+  //     query: {
+  //       data: getOrderBook(selectedCoin), // Pass your data as a query parameter
+  //     },
+  //   });
 
-    console.log("Socket connected");
+  //   console.log("Socket connected");
 
-    socket.on("orderBookUpdate", (newOrderBook) => {
-      console.log("Order book update received:", newOrderBook);
-      setOrderBook(newOrderBook);
-    });
+  //   socket.on("orderBookUpdate", (newOrderBook) => {
+  //     console.log("Order book update received:", newOrderBook);
+  //     setOrderBook(newOrderBook);
+  //   });
 
-    return () => {
-      socket.disconnect();
-      console.log("Socket disconnected");
-    };
-  }, [selectedCoin]);
+  //   return () => {
+  //     socket.disconnect();
+  //     console.log("Socket disconnected");
+  //   };
+  // }, [selectedCoin]);
+
+  // useEffect(() => {
+  //   const fetchAccountInfo = async () => {
+  //     try {
+  //       const response = await getOrderBook();
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error("Error fetching account info:", error);
+  //     }
+  //   };
+
+  //   // Fetch account info immediately when the component mounts
+  //   fetchAccountInfo();
+
+  //   // Set up an interval to fetch account info every 10 seconds (adjust as needed)
+  //   const intervalId = setInterval(() => {
+  //     fetchAccountInfo();
+  //   }, 1000); // 5 seconds
+
+  //   // Clean up the interval when the component unmounts
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
   useEffect(() => {
     if (price.length === 0) {
